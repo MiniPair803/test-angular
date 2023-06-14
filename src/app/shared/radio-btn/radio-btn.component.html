@@ -1,0 +1,16 @@
+<div class="d-flex flex-column flex-sm-row">
+  <div class="me-4" *ngFor="let option of options; let i = index">
+    <label class="radio">
+      <input
+        type="radio"
+        name="option"
+        (change)="selectValue($event)"
+        [value]="i"
+        [checked]="options[selectedOption] === option"
+      />
+
+      <span class="checkround"></span>
+      {{ option }}
+    </label>
+  </div>
+</div>

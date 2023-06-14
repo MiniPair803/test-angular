@@ -1,0 +1,4 @@
+.navbar {
+  height: 56px !important; /*i assume your navbar size 100px*/
+  background-color: #F1A661;
+}

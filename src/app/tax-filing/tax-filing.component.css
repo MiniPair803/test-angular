@@ -1,0 +1,24 @@
+.box {
+  border: 1px solid #E38B29;
+}
+
+.btn-next {
+  background-color: #F1A661;
+  color: white;
+}
+
+
+::ng-deep .btn:focus {
+  box-shadow: 0 0 0 0.2rem #FDEEDC;
+}
+
+::ng-deep .btn-check:checked+.btn,
+.btn.active,
+.btn.show,
+.btn:first-child:active,
+:not(.btn-check)+.btn:active {
+  box-shadow: 0 0 0 0.2rem #FDEEDC;
+  background-color: #F1A661;
+  border-color: #FDEEDC;
+  color: white;
+}

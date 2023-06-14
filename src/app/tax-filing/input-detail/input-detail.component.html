@@ -1,0 +1,80 @@
+<div class="border-bottom">
+  <h5 clase="fw-bold">1. Text Flling Detail</h5>
+</div>
+<div class="my-4">
+  <h6 class="fw-normal">Type of filing<span class="text-danger">*</span></h6>
+  <div class="d-flex">
+    <app-radio-btn
+      [options]="options"
+      [selectedOption]="selectedTypeFilingValue"
+      (valueSelected)="onSelectTypeFiling($event)"
+    ></app-radio-btn>
+  </div>
+  <div class="row my-4">
+    <div class="col-12 col-lg-6">
+      <h6 class="fw-normal">VAT Month<span class="text-danger">*</span></h6>
+      <div class="d-flex flex-column flex-md-row">
+        <div class="me-2 mb-2 my-md-0">
+          <app-dropdown-list
+            [options]="month"
+            [defaultOption]="'Select Month'"
+            (valueSelected)="onSelectMonth($event)"
+          ></app-dropdown-list>
+        </div>
+        <div class="me-2">
+          <app-dropdown-list
+            [options]="year"
+            [defaultOption]="'Select Year'"
+            (valueSelected)="onSelectYear($event)"
+          ></app-dropdown-list>
+        </div>
+      </div>
+    </div>
+    <div
+      class="col-12 col-md-6 my-2 my-md-0"
+      *ngIf="selectedTypeFilingValue === '1'"
+    >
+      <h6 class="fw-normal">Type<span class="text-danger">*</span></h6>
+      <div class="d-flex">
+        <div class="me-2">
+          <app-dropdown-list
+            [defaultOption]="'Select Type'"
+          ></app-dropdown-list>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="border-bottom mt-4 py-2 py-sm-0">
+  <div class="d-flex flex-wrap justify-content-between align-items-center">
+    <h5 clase="fw-bold ">2. Tax Computation</h5>
+    <span class="subtext">View Exchange Rate</span>
+  </div>
+</div>
+<div class="my-4">
+  <h6 class="fw-normal">
+    Provide total value taxable electronic service<span class="text-danger"
+      >*</span
+    >
+  </h6>
+  <div class="row align-items-center">
+    <div class="col-12 col-lg-8">
+      <div class="chioce">
+        1. Total value of taxable electronic service exclusive of VAT
+      </div>
+    </div>
+    <div class="col-12 col-lg-4 text-container">
+      <input class="form-control" />
+      <span class="span-text">THB</span>
+    </div>
+  </div>
+  <div class="row my-2 align-items-center">
+    <div class="col-12 col-lg-8">
+      <div class="chioce">2. Total VAT to be remitted (7% of 1.)</div>
+    </div>
+    <div class="col-12 col-lg-4 text-container">
+      <input class="form-control" />
+      <span class="span-text">THB</span>
+    </div>
+  </div>
+</div>

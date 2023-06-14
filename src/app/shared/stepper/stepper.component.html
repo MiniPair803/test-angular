@@ -1,0 +1,12 @@
+<div class="stepper-wrapper">
+  <ng-container *ngFor="let step of steps; let i = index">
+    <div
+      class="stepper-item"
+      [class.active]="i + 1 === currentStep"
+      [class.completed]="i + 1 < currentStep"
+    >
+      <div class="step-counter">{{ i + 1 }}</div>
+      <div class="step-name">{{ nameStep[i] }}</div>
+    </div>
+  </ng-container>
+</div>

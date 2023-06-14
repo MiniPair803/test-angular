@@ -1,0 +1,10 @@
+<select
+  class="form-select"
+  (change)="onSelect($event)"
+  [(ngModel)]="selectedOption"
+>
+  <option value="">{{ defaultOption }}</option>
+  <option *ngFor="let option of options" [value]="option.value">
+    {{ option.label }}
+  </option>
+</select>

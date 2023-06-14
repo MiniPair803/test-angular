@@ -1,0 +1,25 @@
+<div class="container py-5 p-md-5">
+  <div class="d-flex justify-content-center">
+    <h2 class="text-center">Submit Tax Filing</h2>
+  </div>
+  <div class="my-2 p-2 px-md-5 d-flex justify-content-center flex-column">
+    <app-stepper
+      [currentStep]="currentStep"
+      [nameStep]="nameStep"
+    ></app-stepper>
+    <div class="step-content">
+      <div class="container box rounded p-4 py-md-4 px-md-5">
+        <div class="step" *ngIf="currentStep === 1">
+          <app-input-detail></app-input-detail>
+        </div>
+        <div class="step" *ngIf="currentStep === 2">
+          <app-review-confirm></app-review-confirm>
+        </div>
+      </div>
+    </div>
+    <div class="my-2">
+      <button class="btn btn-next" (click)="onPreviousClick()">Back</button>
+      <button class="btn btn-next mx-2" (click)="onNextClick()">Next</button>
+    </div>
+  </div>
+</div>

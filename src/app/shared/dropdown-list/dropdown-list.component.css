@@ -1,0 +1,14 @@
+::ng-deep .form-select {
+  background-color: #F1A661;
+  border: 1px solid #FDEEDC;
+  color: white
+}
+
+::ng-deep .form-select:focus {
+  border: 1px solid #FDEEDC;
+  box-shadow: 0 0 0 0.2rem #FDEEDC;
+}
+
+::ng-deep .input-bg {
+  background-color: red;
+}

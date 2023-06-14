@@ -1,0 +1,35 @@
+.subtext {
+  font-size: 12px;
+}
+
+.chioce {
+  font-size: 14px;
+}
+
+.text-container {
+  display: flex;
+}
+
+.span-text {
+  border: 1px solid;
+  align-items: center;
+  justify-content: center;
+  padding: 0px 10px;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  display: inherit;
+  border-color: #F1A661;
+  background: #F1A661;
+  color: white;
+}
+
+::ng-deep .form-control {
+  border-radius: 0;
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+::ng-deep .form-control:focus {
+  box-shadow: 0px 0px;
+  border-color: #F1A661;
+}
