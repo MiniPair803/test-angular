@@ -41,7 +41,7 @@ export class InputDetailComponent implements OnInit, OnChanges {
   @Input() selectedMonth: string = '';
   @Input() selectedYear: string = '';
 
-  valueInput: any = { saleAmount: 0, taxAmount: 0 };
+  valueInput: any = { saleAmount: '', taxAmount: '' };
 
   constructor() {}
 
@@ -57,7 +57,6 @@ export class InputDetailComponent implements OnInit, OnChanges {
     this.selectedMonth = value;
   }
   onSelectYear(value: any) {
-    console.log(value);
     this.selectedYear = value;
   }
 
@@ -66,11 +65,17 @@ export class InputDetailComponent implements OnInit, OnChanges {
     const id = target.id;
     let value = 0;
     if (target.value.slice(0, 1) !== '0') {
-      value = Number(Number(target.value).toFixed(2));
+      value = parseFloat(Number(target.value).toFixed(2));
     } else {
       value = 0;
     }
-    this.valueInput[id] = value;
-    console.log(this.valueInput);
+    this.valueInput[id] = value.toLocaleString().toString();
+  }
+
+  changeToNumber(event: Event) {
+    const target = event.target as HTMLInputElement;
+    const id = target.id;
+    const value = target.value.replace(/,/g, '');
+    this.valueInput[id] = target.value === '' ? '' : parseFloat(value);
   }
 }

@@ -64,13 +64,12 @@
       <input
         id="saleAmount"
         name="saleAmount"
-        type="number"
-        min="0"
-        step="0.01"
+        type="text"
         class="form-control text-end"
-        onkeyup="if(value<0) value='';"
+        onkeyup="if(value<0 || isNaN(parseInt(value)) === true || isNaN(Number(value))==true) value='';"
         [(ngModel)]="valueInput.saleAmount"
         (blur)="formatCurrency($event)"
+        (focus)="changeToNumber($event)"
       />
       <span class="span-text">THB</span>
     </div>
@@ -83,13 +82,12 @@
       <input
         id="taxAmount"
         name="taxAmount"
-        type="number"
-        min="0"
-        step="0.01"
+        type="text"
         class="form-control text-end"
-        onkeyup="if(value<0) value='';"
+        onkeyup="if(value<0 || isNaN(parseInt(value)) === true || isNaN(Number(value))==true) value='';"
         [(ngModel)]="valueInput.taxAmount"
         (blur)="formatCurrency($event)"
+        (focus)="changeToNumber($event)"
       />
       <span class="span-text">THB</span>
     </div>
