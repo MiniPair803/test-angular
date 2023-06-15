@@ -41,11 +41,11 @@ export class InputDetailComponent implements OnInit, OnChanges {
   @Input() selectedMonth: string = '';
   @Input() selectedYear: string = '';
 
+  valueInput: any = { saleAmount: 0, taxAmount: 0 };
+
   constructor() {}
 
-  ngOnInit(): void {
-    console.log(this.year, this.date.getFullYear());
-  }
+  ngOnInit(): void {}
 
   ngOnChanges(): void {}
 
@@ -59,5 +59,18 @@ export class InputDetailComponent implements OnInit, OnChanges {
   onSelectYear(value: any) {
     console.log(value);
     this.selectedYear = value;
+  }
+
+  formatCurrency(event: Event) {
+    const target = event.target as HTMLInputElement;
+    const id = target.id;
+    let value = 0;
+    if (target.value.slice(0, 1) !== '0') {
+      value = Number(Number(target.value).toFixed(2));
+    } else {
+      value = 0;
+    }
+    this.valueInput[id] = value;
+    console.log(this.valueInput);
   }
 }

@@ -30,9 +30,9 @@
         </div>
       </div>
     </div>
-    <div class="col-12 col-md-6 my-2 my-md-0" *ngIf="selectedOption === '1'">
+    <div class="col-12 col-md-6 my-2 my-lg-0" *ngIf="selectedOption === '1'">
       <h6 class="fw-normal">Type<span class="text-danger">*</span></h6>
-      <div class="d-flex">
+      <div class="d-flex flex-column flex-md-row">
         <div class="me-2">
           <app-dropdown-list
             [defaultOption]="'Select Type'"
@@ -49,28 +49,72 @@
   </div>
 </div>
 <div class="my-4">
-  <h6 class="fw-normal">
+  <h6 class="toppic">
     Provide total value taxable electronic service<span class="text-danger"
       >*</span
     >
   </h6>
-  <div class="row align-items-center">
-    <div class="col-12 col-lg-8">
+  <div class="row my-2">
+    <div class="col-12 col-lg-8 d-flex align-items-center">
       <div class="chioce">
         1. Total value of taxable electronic service exclusive of VAT
       </div>
     </div>
     <div class="col-12 col-lg-4 text-container">
-      <input class="form-control" />
+      <input
+        id="saleAmount"
+        name="saleAmount"
+        type="number"
+        min="0"
+        step="0.01"
+        class="form-control text-end"
+        onkeyup="if(value<0) value='';"
+        [(ngModel)]="valueInput.saleAmount"
+        (blur)="formatCurrency($event)"
+      />
       <span class="span-text">THB</span>
     </div>
   </div>
-  <div class="row my-2 align-items-center">
-    <div class="col-12 col-lg-8">
+  <div class="row my-2">
+    <div class="col-12 col-lg-8 d-flex align-items-center">
       <div class="chioce">2. Total VAT to be remitted (7% of 1.)</div>
     </div>
     <div class="col-12 col-lg-4 text-container">
-      <input class="form-control" />
+      <input
+        id="taxAmount"
+        name="taxAmount"
+        type="number"
+        min="0"
+        step="0.01"
+        class="form-control text-end"
+        onkeyup="if(value<0) value='';"
+        [(ngModel)]="valueInput.taxAmount"
+        (blur)="formatCurrency($event)"
+      />
+      <span class="span-text">THB</span>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="selectedOption === '1'" class="my-4">
+  <h6 class="toppic">In case of late filing and payment, additional filing</h6>
+  <div class="row my-2">
+    <div class="col-12 col-lg-8 d-flex align-items-center">
+      <div class="chioce">
+        3. Total value of taxable electronic service exclusive of VAT
+      </div>
+    </div>
+    <div class="col-12 col-lg-4 text-container">
+      <input class="form-control" disabled />
+      <span class="span-text">THB</span>
+    </div>
+  </div>
+  <div class="row my-2">
+    <div class="col-12 col-lg-8 d-flex align-items-center">
+      <div class="chioce">4. Total VAT to be remitted</div>
+    </div>
+    <div class="col-12 col-lg-4 text-container">
+      <input class="form-control" disabled />
       <span class="span-text">THB</span>
     </div>
   </div>

@@ -1,3 +1,8 @@
+.text-header {
+  color: #F1A661;
+  font-weight: 600;
+}
+
 .box {
   border: 1px solid #E38B29;
 }
