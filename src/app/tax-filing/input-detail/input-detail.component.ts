@@ -42,6 +42,7 @@ export class InputDetailComponent implements OnInit, OnChanges {
   @Input() selectedYear: string = '';
 
   valueInput: any = { saleAmount: '', taxAmount: '' };
+  textAlert: boolean = false;
 
   constructor() {}
 
@@ -68,6 +69,19 @@ export class InputDetailComponent implements OnInit, OnChanges {
       value = parseFloat(Number(target.value).toFixed(2));
     } else {
       value = 0;
+    }
+    if (id === 'taxAmount') {
+      const saleAmount =
+        parseFloat(this.valueInput['saleAmount'].replace(/,/g, '')) * 0.07;
+
+      const minSaleAmount = saleAmount - 20 < 0 ? 0 : saleAmount - 20;
+      const maxSaleAmount = saleAmount + 20;
+
+      if (value > maxSaleAmount || value < minSaleAmount) {
+        this.textAlert = true;
+      } else {
+        this.textAlert = false;
+      }
     }
     if (id === 'saleAmount') {
       this.valueInput['taxAmount'] =

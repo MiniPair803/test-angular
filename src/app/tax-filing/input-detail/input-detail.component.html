@@ -75,21 +75,26 @@
     </div>
   </div>
   <div class="row my-2">
-    <div class="col-12 col-lg-8 d-flex align-items-center">
+    <div class="col-12 col-lg-8 d-flex">
       <div class="chioce">2. Total VAT to be remitted (7% of 1.)</div>
     </div>
-    <div class="col-12 col-lg-4 text-container">
-      <input
-        id="taxAmount"
-        name="taxAmount"
-        type="text"
-        class="form-control text-end"
-        onkeyup="if(value<0 || isNaN(parseInt(value)) === true || isNaN(Number(value))==true) value='';"
-        [(ngModel)]="valueInput.taxAmount"
-        (blur)="formatCurrency($event)"
-        (focus)="changeToNumber($event)"
-      />
-      <span class="span-text">THB</span>
+    <div class="col-12 col-lg-4 flex-column text-container">
+      <div class="d-flex">
+        <input
+          id="taxAmount"
+          name="taxAmount"
+          type="text"
+          class="form-control text-end"
+          onkeyup="if(value<0 || isNaN(parseInt(value)) === true || isNaN(Number(value))==true) value='';"
+          [(ngModel)]="valueInput.taxAmount"
+          (blur)="formatCurrency($event)"
+          (focus)="changeToNumber($event)"
+        />
+        <span class="span-text">THB</span>
+      </div>
+      <span class="text-danger my-1" style="font-size: 12px">{{
+        textAlert ? "ใส่จำนวนได้ไม่เกินบวกลบ 20 จาก Tax" : ""
+      }}</span>
     </div>
   </div>
 </div>
