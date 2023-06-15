@@ -69,13 +69,33 @@ export class InputDetailComponent implements OnInit, OnChanges {
     } else {
       value = 0;
     }
-    this.valueInput[id] = value.toLocaleString().toString();
+    if (id === 'saleAmount') {
+      this.valueInput['taxAmount'] =
+        target.value === ''
+          ? ''
+          : (value * 0.07)
+              .toLocaleString('en-US', {
+                style: 'currency',
+                currency: 'USD',
+              })
+              .replace('$', '');
+    }
+    this.valueInput[id] =
+      target.value === ''
+        ? ''
+        : value
+            .toLocaleString('en-US', {
+              style: 'currency',
+              currency: 'USD',
+            })
+            .replace('$', '');
   }
 
   changeToNumber(event: Event) {
     const target = event.target as HTMLInputElement;
     const id = target.id;
     const value = target.value.replace(/,/g, '');
-    this.valueInput[id] = target.value === '' ? '' : parseFloat(value);
+    this.valueInput[id] =
+      target.value === '' ? '' : parseFloat(value).toFixed(2);
   }
 }
