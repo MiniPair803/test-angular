@@ -6,7 +6,7 @@
   <div class="d-flex">
     <app-radio-btn
       [options]="options"
-      [selectedOption]="selectedTypeFilingValue"
+      [selectedOption]="selectedOption"
       (valueSelected)="onSelectTypeFiling($event)"
     ></app-radio-btn>
   </div>
@@ -30,10 +30,7 @@
         </div>
       </div>
     </div>
-    <div
-      class="col-12 col-md-6 my-2 my-md-0"
-      *ngIf="selectedTypeFilingValue === '1'"
-    >
+    <div class="col-12 col-md-6 my-2 my-md-0" *ngIf="selectedOption === '1'">
       <h6 class="fw-normal">Type<span class="text-danger">*</span></h6>
       <div class="d-flex">
         <div class="me-2">

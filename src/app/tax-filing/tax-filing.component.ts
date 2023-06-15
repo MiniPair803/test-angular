@@ -8,6 +8,8 @@ import { Component, OnInit, Input } from '@angular/core';
 export class TaxFilingComponent implements OnInit {
   @Input() currentStep: number = 1;
   @Input() nameStep: string[] = ['Input Detail', 'Review & Confirm'];
+  @Input() optionsFiling: string[] = ['Ordinary Filing', 'Additional Filing'];
+  @Input() selectedOption: string = '0';
 
   constructor() {}
   ngOnInit(): void {}
@@ -20,5 +22,8 @@ export class TaxFilingComponent implements OnInit {
     if (this.currentStep > 1) {
       this.currentStep--;
     }
+  }
+  setSelectFiling(value: string) {
+    this.selectedOption = value;
   }
 }

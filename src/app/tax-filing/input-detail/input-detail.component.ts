@@ -1,4 +1,11 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  OnChanges,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 
 @Component({
   selector: 'app-input-detail',
@@ -7,9 +14,9 @@ import { Component, OnInit, Input, OnChanges } from '@angular/core';
 })
 export class InputDetailComponent implements OnInit, OnChanges {
   date = new Date();
-  @Input() options: string[] = ['Ordinary Filing', 'Additional Filing'];
-  @Input() selectedOption: string = '0';
-  selectedTypeFilingValue: string = '0';
+  @Output() selectFiling = new EventEmitter<string>();
+  @Input() options: any;
+  @Input() selectedOption: any;
   @Input() month: Object = [
     { value: '01', label: 'January' },
     { value: '02', label: 'February' },
@@ -40,12 +47,10 @@ export class InputDetailComponent implements OnInit, OnChanges {
     console.log(this.year, this.date.getFullYear());
   }
 
-  ngOnChanges(): void {
-    console.log(this.selectedTypeFilingValue);
-  }
+  ngOnChanges(): void {}
 
   onSelectTypeFiling(value: string) {
-    this.selectedTypeFilingValue = value;
+    this.selectFiling.emit(value);
   }
 
   onSelectMonth(value: any) {

@@ -12,3 +12,9 @@
 ::ng-deep .input-bg {
   background-color: red;
 }
+
+option {
+  background-color: white;
+  color: #F1A661;
+  border: 1px solid #ccc;
+}
