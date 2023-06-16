@@ -41,7 +41,13 @@ export class InputDetailComponent implements OnInit, OnChanges {
   @Input() selectedMonth: string = '';
   @Input() selectedYear: string = '';
 
-  valueInput: any = { saleAmount: '', taxAmount: '' };
+  valueInput: any = {
+    saleAmount: '',
+    taxAmount: '',
+    surcharge: '0.00',
+    penalty: '200.00',
+    totalAmount: '0.00',
+  };
   textAlert: boolean = false;
 
   constructor() {}
@@ -61,7 +67,16 @@ export class InputDetailComponent implements OnInit, OnChanges {
     this.selectedYear = value;
   }
 
-  formatCurrency(event: Event) {
+  toFormatMoney(value: number) {
+    return value
+      .toLocaleString('en-US', {
+        style: 'currency',
+        currency: 'USD',
+      })
+      .replace('$', '');
+  }
+
+  handleOnBlur(event: Event) {
     const target = event.target as HTMLInputElement;
     const id = target.id;
     let value = 0;
@@ -82,30 +97,30 @@ export class InputDetailComponent implements OnInit, OnChanges {
       } else {
         this.textAlert = false;
       }
+
+      const surcharge = value * 0.1;
+      this.valueInput['surcharge'] =
+        target.value === '' ? '0.00' : this.toFormatMoney(surcharge);
+      const total = value + surcharge + parseFloat(this.valueInput['penalty']);
+      this.valueInput['totalAmount'] =
+        target.value === '' ? '0.00' : this.toFormatMoney(total);
     }
     if (id === 'saleAmount') {
+      const taxAmount = value * 0.07;
+      const surcharge = taxAmount * 0.1;
       this.valueInput['taxAmount'] =
-        target.value === ''
-          ? ''
-          : (value * 0.07)
-              .toLocaleString('en-US', {
-                style: 'currency',
-                currency: 'USD',
-              })
-              .replace('$', '');
+        target.value === '' ? '' : this.toFormatMoney(taxAmount);
+      this.valueInput['surcharge'] =
+        target.value === '' ? '0.00' : this.toFormatMoney(surcharge);
+      const total =
+        taxAmount + surcharge + parseFloat(this.valueInput['penalty']);
+      this.valueInput['totalAmount'] =
+        target.value === '' ? '0.00' : this.toFormatMoney(total);
     }
-    this.valueInput[id] =
-      target.value === ''
-        ? ''
-        : value
-            .toLocaleString('en-US', {
-              style: 'currency',
-              currency: 'USD',
-            })
-            .replace('$', '');
+    this.valueInput[id] = target.value === '' ? '' : this.toFormatMoney(value);
   }
 
-  changeToNumber(event: Event) {
+  handleOnFocus(event: Event) {
     const target = event.target as HTMLInputElement;
     const id = target.id;
     const value = target.value.replace(/,/g, '');

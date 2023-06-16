@@ -68,8 +68,8 @@
         class="form-control text-end"
         onkeyup="if(value<0 || isNaN(parseInt(value)) === true || isNaN(Number(value))==true) value='';"
         [(ngModel)]="valueInput.saleAmount"
-        (blur)="formatCurrency($event)"
-        (focus)="changeToNumber($event)"
+        (blur)="handleOnBlur($event)"
+        (focus)="handleOnFocus($event)"
       />
       <span class="span-text">THB</span>
     </div>
@@ -87,13 +87,15 @@
           class="form-control text-end"
           onkeyup="if(value<0 || isNaN(parseInt(value)) === true || isNaN(Number(value))==true) value='';"
           [(ngModel)]="valueInput.taxAmount"
-          (blur)="formatCurrency($event)"
-          (focus)="changeToNumber($event)"
+          (blur)="handleOnBlur($event)"
+          (focus)="handleOnFocus($event)"
         />
         <span class="span-text">THB</span>
       </div>
       <span class="text-danger my-1" style="font-size: 12px">{{
-        textAlert ? "ใส่จำนวนได้ไม่เกินบวกลบ 20 จาก Tax" : ""
+        textAlert
+          ? "Do not enter amounts below or above 20 of the VAT charge."
+          : ""
       }}</span>
     </div>
   </div>
@@ -103,21 +105,51 @@
   <h6 class="toppic">In case of late filing and payment, additional filing</h6>
   <div class="row my-2">
     <div class="col-12 col-lg-8 d-flex align-items-center">
-      <div class="chioce">
-        3. Total value of taxable electronic service exclusive of VAT
-      </div>
+      <div class="chioce">3. Surcharge</div>
     </div>
     <div class="col-12 col-lg-4 text-container">
-      <input class="form-control" disabled />
+      <input
+        id="surcharge"
+        name="surcharge"
+        type="text"
+        class="form-control text-end text-secondary"
+        [(ngModel)]="valueInput.surcharge"
+        disabled
+      />
       <span class="span-text">THB</span>
     </div>
   </div>
   <div class="row my-2">
     <div class="col-12 col-lg-8 d-flex align-items-center">
-      <div class="chioce">4. Total VAT to be remitted</div>
+      <div class="chioce">4. Penalty</div>
     </div>
     <div class="col-12 col-lg-4 text-container">
-      <input class="form-control" disabled />
+      <input
+        id="penalty"
+        mame="penalty"
+        type="text"
+        class="form-control text-end text-secondary"
+        [(ngModel)]="valueInput.penalty"
+        disabled
+      />
+      <span class="span-text">THB</span>
+    </div>
+  </div>
+  <div class="row my-2">
+    <div class="col-12 col-lg-8 d-flex align-items-center">
+      <div class="chioce">
+        5. Total amount of VAT, surcharge and penalty to be remitted (2.+3.+4.)
+      </div>
+    </div>
+    <div class="col-12 col-lg-4 text-container">
+      <input
+        id="totalAmount"
+        mame="totalAmount"
+        type="text"
+        class="form-control text-end text-secondary"
+        [(ngModel)]="valueInput.totalAmount"
+        disabled
+      />
       <span class="span-text">THB</span>
     </div>
   </div>
