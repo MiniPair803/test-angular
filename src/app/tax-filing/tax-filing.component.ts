@@ -9,6 +9,7 @@ import { InputDetailComponent } from '../tax-filing/input-detail/input-detail.co
 export class TaxFilingComponent implements OnInit {
   @ViewChild(InputDetailComponent)
   inputDetailComponent: InputDetailComponent = new InputDetailComponent();
+  @ViewChild('modalTaxData') modalTaxData: any;
   constructor() {}
   date = new Date();
   @Input() currentStep: number = 1;
@@ -39,6 +40,7 @@ export class TaxFilingComponent implements OnInit {
     label: m,
   }));
   @Input() taxData: any;
+  jsonString: any = {};
 
   ngOnInit(): void {}
   onNextClick() {
@@ -61,5 +63,9 @@ export class TaxFilingComponent implements OnInit {
   checkRequired(): boolean {
     const isRequired = !this.inputDetailComponent.checkRequired();
     return isRequired;
+  }
+
+  getJsonString() {
+    this.jsonString = JSON.stringify(this.taxData);
   }
 }
