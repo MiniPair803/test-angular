@@ -16,25 +16,37 @@
       <div class="d-flex flex-column flex-md-row">
         <div class="me-2 mb-2 my-md-0">
           <app-dropdown-list
+            [idDropDown]="'month'"
             [options]="month"
             [defaultOption]="'Select Month'"
             (valueSelected)="onSelectMonth($event)"
+            [isRequired]="isRequire && selectedMonth === ''"
           ></app-dropdown-list>
         </div>
         <div class="me-2">
           <app-dropdown-list
+            [idDropDown]="'year'"
             [options]="year"
             [defaultOption]="'Select Year'"
             (valueSelected)="onSelectYear($event)"
+            [isRequired]="isRequire && selectedYear === ''"
           ></app-dropdown-list>
         </div>
       </div>
+      <span class="text-danger my-1" style="font-size: 12px">
+        {{
+          isRequire && (selectedMonth === "" || selectedYear == "")
+            ? "Invalid Data"
+            : ""
+        }}</span
+      >
     </div>
     <div class="col-12 col-md-6 my-2 my-lg-0" *ngIf="selectedOption === '1'">
       <h6 class="fw-normal">Type<span class="text-danger">*</span></h6>
       <div class="d-flex flex-column flex-md-row">
         <div class="me-2">
           <app-dropdown-list
+            [options]="type"
             [defaultOption]="'Select Type'"
           ></app-dropdown-list>
         </div>
@@ -60,18 +72,31 @@
         1. Total value of taxable electronic service exclusive of VAT
       </div>
     </div>
-    <div class="col-12 col-lg-4 text-container">
-      <input
-        id="saleAmount"
-        name="saleAmount"
-        type="text"
-        class="form-control text-end"
-        onkeyup="if(value<0 || isNaN(parseInt(value)) === true || isNaN(Number(value))==true) value='';"
-        [(ngModel)]="valueInput.saleAmount"
-        (blur)="handleOnBlur($event)"
-        (focus)="handleOnFocus($event)"
-      />
-      <span class="span-text">THB</span>
+    <div class="col-12 col-lg-4 flex-column text-container">
+      <div class="d-flex">
+        <input
+          id="saleAmount"
+          name="saleAmount"
+          type="text"
+          class="form-control text-end"
+          onkeyup="if(value<0 || isNaN(parseInt(value)) === true || isNaN(Number(value))==true) value='';"
+          [(ngModel)]="valueInput.saleAmount"
+          (blur)="handleOnBlur($event)"
+          (focus)="handleOnFocus($event)"
+          [ngClass]="
+            isRequire && valueInput.saleAmount == ''
+              ? 'border border-danger'
+              : ''
+          "
+          required
+        />
+        <span class="span-text">THB</span>
+      </div>
+      <span class="text-danger my-1" style="font-size: 12px">
+        {{
+          isRequire && valueInput.taxAmount == "" ? "Invalid Data" : ""
+        }}</span
+      >
     </div>
   </div>
   <div class="row my-2">
@@ -89,14 +114,24 @@
           [(ngModel)]="valueInput.taxAmount"
           (blur)="handleOnBlur($event)"
           (focus)="handleOnFocus($event)"
+          [ngClass]="
+            isRequire && valueInput.taxAmount == ''
+              ? 'border border-danger'
+              : ''
+          "
+          required
         />
         <span class="span-text">THB</span>
       </div>
-      <span class="text-danger my-1" style="font-size: 12px">{{
-        textAlert
-          ? "Do not enter amounts below or above 20 of the VAT charge."
-          : ""
-      }}</span>
+      <span class="text-danger my-1" style="font-size: 12px">
+        {{
+          isRequire && valueInput.taxAmount == ""
+            ? "Invalid Data"
+            : textAlert
+            ? "Do not enter amounts below or above 20 of the VAT charge."
+            : ""
+        }}</span
+      >
     </div>
   </div>
 </div>

@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { InputDetailComponent } from '../tax-filing/input-detail/input-detail.component';
 
 @Component({
   selector: 'app-tax-filing',
@@ -6,16 +7,20 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./tax-filing.component.css'],
 })
 export class TaxFilingComponent implements OnInit {
+  @ViewChild(InputDetailComponent)
+  inputDetailComponent: InputDetailComponent = new InputDetailComponent();
+  constructor() {}
   @Input() currentStep: number = 1;
   @Input() nameStep: string[] = ['Input Detail', 'Review & Confirm'];
   @Input() optionsFiling: string[] = ['Ordinary Filing', 'Additional Filing'];
   @Input() selectedOption: string = '0';
 
-  constructor() {}
   ngOnInit(): void {}
   onNextClick() {
-    if (this.currentStep < 3) {
-      this.currentStep++;
+    if (this.checkRequired()) {
+      if (this.currentStep < 3) {
+        this.currentStep++;
+      }
     }
   }
   onPreviousClick() {
@@ -25,5 +30,14 @@ export class TaxFilingComponent implements OnInit {
   }
   setSelectFiling(value: string) {
     this.selectedOption = value;
+  }
+
+  setTaxData(value: any) {
+    console.log(value);
+  }
+
+  checkRequired(): boolean {
+    const isRequired = !this.inputDetailComponent.checkRequired();
+    return isRequired;
   }
 }

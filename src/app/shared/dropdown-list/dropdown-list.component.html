@@ -1,7 +1,9 @@
 <select
+  [id]="idDropDown"
   class="form-select"
   (change)="onSelect($event)"
   [(ngModel)]="selectedOption"
+  [ngClass]="isRequired ? 'border border-danger' : ''"
 >
   <option value="">{{ defaultOption }}</option>
   <option *ngFor="let option of options" [value]="option.value">

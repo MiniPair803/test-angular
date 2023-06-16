@@ -14,7 +14,11 @@ import {
 })
 export class InputDetailComponent implements OnInit, OnChanges {
   date = new Date();
+  saleAmount = 'saleAmount';
+  taxAmount = 'taxAmount';
+  isRequire = false;
   @Output() selectFiling = new EventEmitter<string>();
+  @Output() taxData = new EventEmitter<any>();
   @Input() options: any;
   @Input() selectedOption: any;
   @Input() month: Object = [
@@ -38,6 +42,8 @@ export class InputDetailComponent implements OnInit, OnChanges {
     value: m,
     label: m,
   }));
+
+  @Input() type: Object = [{ value: '1', label: 'On-Time' }];
   @Input() selectedMonth: string = '';
   @Input() selectedYear: string = '';
 
@@ -67,7 +73,7 @@ export class InputDetailComponent implements OnInit, OnChanges {
     this.selectedYear = value;
   }
 
-  toFormatMoney(value: number) {
+  toFormatMoney(value: number): string {
     return value
       .toLocaleString('en-US', {
         style: 'currency',
@@ -78,22 +84,26 @@ export class InputDetailComponent implements OnInit, OnChanges {
 
   handleOnBlur(event: Event) {
     const target = event.target as HTMLInputElement;
-    const id = target.id;
+    const name = target.name;
     let value = 0;
     if (target.value.slice(0, 1) !== '0') {
       value = parseFloat(Number(target.value).toFixed(2));
     } else {
       value = 0;
     }
-    if (id === 'taxAmount') {
+    if (name === 'taxAmount') {
       const saleAmount =
         parseFloat(this.valueInput['saleAmount'].replace(/,/g, '')) * 0.07;
 
       const minSaleAmount = saleAmount - 20 < 0 ? 0 : saleAmount - 20;
       const maxSaleAmount = saleAmount + 20;
 
-      if (value > maxSaleAmount || value < minSaleAmount) {
-        this.textAlert = true;
+      if (target.value !== '') {
+        if (value > maxSaleAmount || value < minSaleAmount) {
+          this.textAlert = true;
+        } else {
+          this.textAlert = false;
+        }
       } else {
         this.textAlert = false;
       }
@@ -105,7 +115,7 @@ export class InputDetailComponent implements OnInit, OnChanges {
       this.valueInput['totalAmount'] =
         target.value === '' ? '0.00' : this.toFormatMoney(total);
     }
-    if (id === 'saleAmount') {
+    if (name === 'saleAmount') {
       const taxAmount = value * 0.07;
       const surcharge = taxAmount * 0.1;
       this.valueInput['taxAmount'] =
@@ -117,14 +127,33 @@ export class InputDetailComponent implements OnInit, OnChanges {
       this.valueInput['totalAmount'] =
         target.value === '' ? '0.00' : this.toFormatMoney(total);
     }
-    this.valueInput[id] = target.value === '' ? '' : this.toFormatMoney(value);
+    this.valueInput[name] =
+      target.value === '' ? '' : this.toFormatMoney(value);
   }
 
   handleOnFocus(event: Event) {
     const target = event.target as HTMLInputElement;
-    const id = target.id;
+    const name = target.name;
     const value = target.value.replace(/,/g, '');
-    this.valueInput[id] =
+    this.valueInput[name] =
       target.value === '' ? '' : parseFloat(value).toFixed(2);
+  }
+
+  checkRequired(): boolean {
+    const sale =
+      !this.valueInput.saleAmount ||
+      this.valueInput.saleAmount.trim().length === 0;
+    const tax =
+      !this.valueInput.taxAmount ||
+      this.valueInput.taxAmount.trim().length === 0;
+
+    const month = this.selectedMonth === '';
+    const year = this.year === '';
+
+    const isRequired = sale || tax || month || year;
+    this.isRequire = isRequired;
+
+    console.log(isRequired);
+    return isRequired;
   }
 }
