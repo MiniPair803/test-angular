@@ -17,35 +17,17 @@ export class InputDetailComponent implements OnInit, OnChanges {
   saleAmount = 'saleAmount';
   taxAmount = 'taxAmount';
   isRequire = false;
+  selectedOption: string = '0';
+
   @Output() selectFiling = new EventEmitter<string>();
   @Output() taxData = new EventEmitter<any>();
   @Input() options: any;
-  @Input() selectedOption: any;
-  @Input() month: Object = [
-    { value: '01', label: 'January' },
-    { value: '02', label: 'February' },
-    { value: '03', label: 'March' },
-    { value: '04', label: 'April' },
-    { value: '05', label: 'May' },
-    { value: '06', label: 'June' },
-    { value: '07', label: 'July' },
-    { value: '08', label: 'August' },
-    { value: '09', label: 'September' },
-    { value: '10', label: 'October' },
-    { value: '11', label: 'November' },
-    { value: '12', label: 'December' },
-  ];
-  @Input() year: Object = Array.from(
-    { length: this.date.getFullYear() - 2020 + 1 },
-    (_, i) => 2020 + i
-  ).map((m) => ({
-    value: m,
-    label: m,
-  }));
-
+  @Input() month: any;
+  @Input() year: any;
   @Input() type: Object = [{ value: '1', label: 'On-Time' }];
   @Input() selectedMonth: string = '';
   @Input() selectedYear: string = '';
+  @Input() selectType: string = '';
 
   valueInput: any = {
     saleAmount: '',
@@ -63,7 +45,8 @@ export class InputDetailComponent implements OnInit, OnChanges {
   ngOnChanges(): void {}
 
   onSelectTypeFiling(value: string) {
-    this.selectFiling.emit(value);
+    this.isRequire = false;
+    this.selectedOption = value;
   }
 
   onSelectMonth(value: any) {
@@ -71,6 +54,9 @@ export class InputDetailComponent implements OnInit, OnChanges {
   }
   onSelectYear(value: any) {
     this.selectedYear = value;
+  }
+  onSelectType(value: any) {
+    this.selectType = value;
   }
 
   toFormatMoney(value: number): string {
@@ -111,7 +97,11 @@ export class InputDetailComponent implements OnInit, OnChanges {
       const surcharge = value * 0.1;
       this.valueInput['surcharge'] =
         target.value === '' ? '0.00' : this.toFormatMoney(surcharge);
-      const total = value + surcharge + parseFloat(this.valueInput['penalty']);
+      const total =
+        value +
+        (this.selectedOption == '1'
+          ? surcharge + parseFloat(this.valueInput['penalty'])
+          : 0);
       this.valueInput['totalAmount'] =
         target.value === '' ? '0.00' : this.toFormatMoney(total);
     }
@@ -123,7 +113,10 @@ export class InputDetailComponent implements OnInit, OnChanges {
       this.valueInput['surcharge'] =
         target.value === '' ? '0.00' : this.toFormatMoney(surcharge);
       const total =
-        taxAmount + surcharge + parseFloat(this.valueInput['penalty']);
+        taxAmount +
+        (this.selectedOption == '1'
+          ? surcharge + parseFloat(this.valueInput['penalty'])
+          : 0);
       this.valueInput['totalAmount'] =
         target.value === '' ? '0.00' : this.toFormatMoney(total);
     }
@@ -150,10 +143,23 @@ export class InputDetailComponent implements OnInit, OnChanges {
     const month = this.selectedMonth === '';
     const year = this.year === '';
 
-    const isRequired = sale || tax || month || year;
+    let isRequired;
+    isRequired = sale || tax || month || year;
+    if (this.selectedOption == '1') {
+      isRequired = isRequired || this.selectType === '';
+    }
     this.isRequire = isRequired;
-
-    console.log(isRequired);
+    const obj = {
+      filingType: this.selectedOption,
+      month: this.month[parseInt(this.selectedMonth)].label,
+      year: this.selectedYear,
+      saleAmount: this.valueInput.saleAmount,
+      taxAmount: this.valueInput.taxAmount,
+      surcharge: this.valueInput.surcharge,
+      penalty: this.valueInput.penalty,
+      totalAmount: this.valueInput.totalAmount,
+    };
+    this.taxData.emit(obj);
     return isRequired;
   }
 }

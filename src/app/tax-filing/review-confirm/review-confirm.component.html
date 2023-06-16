@@ -7,7 +7,7 @@
       <h6 class="fw-normal">Type of filing</h6>
     </div>
     <div class="col-6 col-sm-8 col-lg-9 col-xl-10">
-      <h6 class="fw-normal">{{ options[selectedOption] }}</h6>
+      <h6 class="fw-light text-secondary">{{ options[taxData.filingType] }}</h6>
     </div>
   </div>
   <div class="row">
@@ -15,7 +15,9 @@
       <h6 class="fw-normal">VAT Month</h6>
     </div>
     <div class="col-6 col-sm-8 col-lg-9 col-xl-10">
-      <h6 class="fw-normal">{{ options[selectedOption] }}</h6>
+      <h6 class="fw-normal text-secondary">
+        {{ taxData.month + " " + taxData.year }}
+      </h6>
     </div>
   </div>
 </div>
@@ -27,28 +29,37 @@
 <div class="my-4">
   <div class="row">
     <div class="col-6">
-      <div class="chioce">
+      <div class="fw-light chioce">
         Total value of taxable electronic service exclusive of VAT
       </div>
     </div>
     <div class="col-6">
-      <h6 class="text-right">230,000.00 <span>THB</span></h6>
+      <h6 class="text-right text-secondary">
+        {{ taxData.saleAmount }} <span>THB</span>
+      </h6>
     </div>
   </div>
   <div class="row my-2">
     <div class="col-6">
-      <div class="chioce">Total VAT to be remitted</div>
+      <div class="fw-light chioce">Total VAT to be remitted</div>
+      <span class="subtext text-secondary">{{
+        "(7% of Total value of taxable electronic service exclusive of VAT)"
+      }}</span>
     </div>
     <div class="col-6">
-      <h6 class="text-right">16,100.00 <span>THB</span></h6>
+      <h6 class="text-right text-secondary">
+        {{ taxData.taxAmount }} <span>THB</span>
+      </h6>
     </div>
   </div>
   <div class="row my-2">
     <div class="col-6">
-      <div class="chioce">Total Amount Payable</div>
+      <div class="fw-light chioce">Total Amount Payable</div>
     </div>
     <div class="col-6">
-      <h6 class="text-right">16,100.00 <span>THB</span></h6>
+      <h6 class="text-right fw-bold text-secondary">
+        {{ taxData.totalAmount }} <span>THB</span>
+      </h6>
     </div>
   </div>
 </div>

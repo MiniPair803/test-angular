@@ -6,8 +6,10 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./review-confirm.component.css'],
 })
 export class ReviewConfirmComponent implements OnInit {
-  @Input() selectedOption: any;
+  @Input() taxData: any;
   @Input() options: any;
+  @Input() month: any;
+  @Input() year: any;
   constructor() {}
 
   ngOnInit(): void {}

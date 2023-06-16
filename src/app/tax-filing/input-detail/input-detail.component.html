@@ -46,11 +46,17 @@
       <div class="d-flex flex-column flex-md-row">
         <div class="me-2">
           <app-dropdown-list
+            [idDropDown]="'type'"
             [options]="type"
             [defaultOption]="'Select Type'"
+            (valueSelected)="onSelectType($event)"
+            [isRequired]="isRequire && selectType === ''"
           ></app-dropdown-list>
         </div>
       </div>
+      <span class="text-danger my-1" style="font-size: 12px">
+        {{ isRequire && selectType == "" ? "Invalid Data" : "" }}</span
+      >
     </div>
   </div>
 </div>

@@ -10,10 +10,35 @@ export class TaxFilingComponent implements OnInit {
   @ViewChild(InputDetailComponent)
   inputDetailComponent: InputDetailComponent = new InputDetailComponent();
   constructor() {}
+  date = new Date();
   @Input() currentStep: number = 1;
-  @Input() nameStep: string[] = ['Input Detail', 'Review & Confirm'];
+  @Input() nameStep: object = [
+    { icon: 'create', name: 'Input Detail' },
+    { icon: 'save', name: 'Review & Confirm' },
+  ];
   @Input() optionsFiling: string[] = ['Ordinary Filing', 'Additional Filing'];
-  @Input() selectedOption: string = '0';
+  @Input() month: Object = [
+    { value: '01', label: 'January' },
+    { value: '02', label: 'February' },
+    { value: '03', label: 'March' },
+    { value: '04', label: 'April' },
+    { value: '05', label: 'May' },
+    { value: '06', label: 'June' },
+    { value: '07', label: 'July' },
+    { value: '08', label: 'August' },
+    { value: '09', label: 'September' },
+    { value: '10', label: 'October' },
+    { value: '11', label: 'November' },
+    { value: '12', label: 'December' },
+  ];
+  @Input() year: Object = Array.from(
+    { length: this.date.getFullYear() - 2020 + 1 },
+    (_, i) => 2020 + i
+  ).map((m) => ({
+    value: m,
+    label: m,
+  }));
+  @Input() taxData: any;
 
   ngOnInit(): void {}
   onNextClick() {
@@ -28,12 +53,9 @@ export class TaxFilingComponent implements OnInit {
       this.currentStep--;
     }
   }
-  setSelectFiling(value: string) {
-    this.selectedOption = value;
-  }
 
   setTaxData(value: any) {
-    console.log(value);
+    this.taxData = value;
   }
 
   checkRequired(): boolean {

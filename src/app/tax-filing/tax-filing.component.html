@@ -12,14 +12,17 @@
         <div class="step" *ngIf="currentStep === 1">
           <app-input-detail
             [options]="optionsFiling"
-            [selectedOption]="selectedOption"
-            (selectFiling)="setSelectFiling($event)"
+            [month]="month"
+            [year]="year"
+            (taxData)="setTaxData($event)"
           ></app-input-detail>
         </div>
         <div class="step" *ngIf="currentStep === 2">
           <app-review-confirm
             [options]="optionsFiling"
-            [selectedOption]="selectedOption"
+            [month]="month"
+            [year]="year"
+            [taxData]="taxData"
           ></app-review-confirm>
         </div>
       </div>
